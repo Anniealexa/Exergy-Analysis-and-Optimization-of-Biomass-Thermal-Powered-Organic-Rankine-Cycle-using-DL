@@ -58,10 +58,10 @@ class TabularModel(nn.Module):
         return output
 
 input_size = 9  # Number of input features
-hidden_size1 = 64
-hidden_size2 = 32
-hidden_size3 = 16
-hidden_size4 = 8
+hidden_size1 = 128
+hidden_size2 = 64
+hidden_size3 = 32
+hidden_size4 = 16
 output_size = 8
 device = torch.device('cuda') if torch.cuda.is_available() else 'cpu'
 model = TabularModel(input_size, hidden_size1, hidden_size2, hidden_size3, hidden_size4, output_size).to(device).eval()
