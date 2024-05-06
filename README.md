@@ -1,0 +1,1 @@
+# Exergy-Analysis-and-Optimization-of-Biomass-Thermal-Powered-Organic-Rankine-Cycle-using-DL
