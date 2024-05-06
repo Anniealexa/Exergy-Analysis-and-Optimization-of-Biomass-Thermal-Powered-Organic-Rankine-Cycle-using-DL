@@ -57,12 +57,12 @@ class TabularModel(nn.Module):
         output = self.output(x)
         return output
 
-input_size = 7  # Number of input features
+input_size = 9  # Number of input features
 hidden_size1 = 64
 hidden_size2 = 32
 hidden_size3 = 16
 hidden_size4 = 8
-output_size = 4
+output_size = 8
 device = torch.device('cuda') if torch.cuda.is_available() else 'cpu'
 model = TabularModel(input_size, hidden_size1, hidden_size2, hidden_size3, hidden_size4, output_size).to(device).eval()
 state_dict = torch.load('model.bin')
@@ -72,14 +72,17 @@ model.load_state_dict(state_dict)
 
 scaler  = load('scaler.joblib')
 
-columns = ['Strength_of_mixture', 'Combustion_efficiency'
-           , 'Temperature_at_point1',
-           'Pressure_at_point1' ,
-           'Temperature_at_point2', 'Evaporator_efficiency', 'Pump_efficiency'
+columns = ['Type_Biomass','Strength_of_mixture', 
+           'Combustion_efficiency', 'Temperature_at_point1', 
+           'Pressure_at_point1' , 'Temperature_at_point2', 'pump_efficiency',
+           'Evaporator_efficiency','Pinch_Point_Temperature'
            ]
 
 label = "Maximum_heat_supplied"
-labels = ["Hot_side_Inlet_Temperature","Maximum_heat_supplied",'Mass_flowrate_workingfluid', 'Mass_flowrate_Biomass']
+labels = ['Mass_flowrate_Biomass',"Hot_side_Inlet_Temperature", 
+          'Mass_flowrate_workingfluid','Maximum_heat_supplied',
+          'Heat_Input_Heat_Exchanger','Net_Power_Output', 
+          'Cycle_Thermal_Efficiency', 'Exergy_Efficiency']
 
 
 def preview():
@@ -90,22 +93,25 @@ def show_data():
 
 
 def model_interface():
-    st.title("A Heat Supply Predictor")
-    st.write("How much power can you generate from your cornstalk using R245fa rankine cycle? Let's find out")
+    st.title("Exergy Analysis and Optimization of Biomass Thermal-Powered Organic Rankine Cycle using the Deep Learning Algorithm")
+    st.write("How well can this system perform? Let's find out")
     with st.sidebar:
         st.subheader('Select Values')
-        strength_of_mixture = st.number_input(label="Stength of Mixture", min_value=0, max_value=10)
+        Type_Biomass = st.number_input(label="Type of Biomass", min_value=1, max_value=2)
+        strength_of_mixture = st.number_input(label="Stength of Mixture", min_value=50, max_value=75)
         #mass_flowrate_Biomass = st.number_input(label="Mass Flowrate of Biomass", min_value=0.1, max_value=0.9)
-        combustion_efficiency = st.number_input(label="Combustion Efficiency", min_value=0.1, max_value=0.9)
+        combustion_efficiency = st.number_input(label="Combustion Efficiency", min_value=70, max_value=80)
         #hot_side_Inlet_Temperature = st.number_input(label="Hot Side Inlet Temperature", min_value=0.0,
          #                                            max_value=5000.0)
-        temperature_at_point1 = st.number_input(label="Temperature at Point 1", min_value=0, max_value=500)
-        pressure_at_point1 = st.number_input(label="Pressure at Point 1", min_value=100000, max_value=10000000)
+        temperature_at_point1 = st.number_input(label="Temperature at Point 1", min_value=440, max_value=500)
+        pressure_at_point1 = st.number_input(label="Pressure at Point 1", min_value=2600000, max_value=3500000)
         #mass_flowrate_workingfluid = st.number_input(label="Mass Flowrate of Working Fluid", min_value=1, max_value=20)
-        temperature_at_point2 = st.number_input(label="Temperature at Point 2", min_value=0, max_value=500)
-        evaporator_efficiency = st.number_input(label="Evaporator Efficiency", min_value=0.1, max_value=0.9)
-        pump_efficiency = st.number_input(label="Pump Efficiency", min_value=0.1, max_value=0.9)
-        values = [strength_of_mixture,
+        temperature_at_point2 = st.number_input(label="Temperature at Point 2", min_value=299, max_value=303)
+        evaporator_efficiency = st.number_input(label="Evaporator Efficiency", min_value=0.5, max_value=0.9)
+        pump_efficiency = st.number_input(label="Pump Efficiency", min_value=0.7, max_value=0.8)
+        Pinch_Point_Temperature = st.number_input(label="Pinch Point Temperature", min_value=0, max_value=1000)
+        values = [Type_Biomass,
+                  strength_of_mixture,
                   #mass_flowrate_Biomass,
                   combustion_efficiency,
                   #hot_side_Inlet_Temperature,
@@ -114,7 +120,8 @@ def model_interface():
                   #mass_flowrate_workingfluid,
                   temperature_at_point2,
                   evaporator_efficiency,
-                  pump_efficiency
+                  pump_efficiency,
+                  Pinch_Point_Temperature
                   ]
         array = np.array(values).reshape(1, -1)
         array = scaler.transform(array)
@@ -122,14 +129,27 @@ def model_interface():
     if button:
         prediction = model(torch.tensor(array).to(dtype = torch.float32))
         predictions = prediction.detach().tolist()[0]
-        maximum_heat_supplied = predictions[0]
         mass_flowrate_biomas = round(predictions[1], 1)
-        mass_flowrate_workingfluid = int(predictions[2])
         hot_side_inlet_temp = predictions[3]
-        st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
-        st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomas}")
+        mass_flowrate_workingfluid = int(predictions[2])
+        maximum_heat_supplied = predictions[0]
+        Heat_Input_Heat_Exchanger = round(predictions[1], 1)
+        Net_Power_Output = round(predictions[1], 1)
+        Cycle_Thermal_Efficiency = round(predictions[1], 1)
+        Exergy_Efficiency = round(predictions[1], 1)
+        
+       
+        
+        
         st.write(f"Mass Flowrate of Working Fluid: {mass_flowrate_workingfluid}")
         st.write(f"Hot Side Inlet Temperature: {hot_side_inlet_temp}")
+        st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomas}")
+        st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
+        st.write(f"Hot Side Inlet Temperature: {Net_Power_Output}")
+        st.write(f"Hot Side Inlet Temperature: {Cycle_Thermal_Efficiency}")
+        st.write(f"Hot Side Inlet Temperature: {Exergy_Efficiency}")
+        
+        
 
 #st.title("Eniola's Project")
 
