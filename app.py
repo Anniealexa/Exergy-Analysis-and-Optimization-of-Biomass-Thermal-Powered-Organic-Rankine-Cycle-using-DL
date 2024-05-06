@@ -145,9 +145,10 @@ def model_interface():
         st.write(f"Hot Side Inlet Temperature: {hot_side_inlet_temp}")
         st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomas}")
         st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
-        st.write(f"Hot Side Inlet Temperature: {Net_Power_Output}")
-        st.write(f"Hot Side Inlet Temperature: {Cycle_Thermal_Efficiency}")
-        st.write(f"Hot Side Inlet Temperature: {Exergy_Efficiency}")
+        st.write(f"Heat Input Heat Exchanger: {Heat_Input_Heat_Exchanger}")
+        st.write(f"Net_Power_Output: {Net_Power_Output}")
+        st.write(f"Net_Power_Output: {Cycle_Thermal_Efficiency}")
+        st.write(f"Exergy_Efficiency: {Exergy_Efficiency}")
         
         
 
