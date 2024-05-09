@@ -129,16 +129,14 @@ def model_interface():
     if button:
         prediction = model(torch.tensor(array).to(dtype = torch.float32))
         predictions = prediction.detach().tolist()[0]
-        mass_flowrate_workingfluid = round(predictions[0], 1)
+        mass_flowrate_workingfluid = predictions[0]
         hot_side_inlet_temp = predictions[1]
-        mass_flowrate_biomass = round(predictions[2], 1)
+        mass_flowrate_biomass = predictions[2]
         maximum_heat_supplied = predictions[3]
         Heat_Input_Heat_Exchanger = round(predictions[4], 1)
         Net_Power_Output = round(predictions[5], 1)
         Cycle_Thermal_Efficiency = round(predictions[6], 1)
         Exergy_Efficiency = round(predictions[7], 1)
-        
-       
         
         
         st.write(f"Mass Flowrate of Working Fluid: {mass_flowrate_workingfluid}")
