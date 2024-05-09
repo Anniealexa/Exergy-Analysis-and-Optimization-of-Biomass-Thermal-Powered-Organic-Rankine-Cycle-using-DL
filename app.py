@@ -129,19 +129,18 @@ def model_interface():
     if button:
         prediction = model(torch.tensor(array).to(dtype = torch.float32))
         predictions = prediction.detach().tolist()[0]
-        mass_flowrate_workingfluid = predictions[0]
+        mass_flowrate_biomass = predictions[0]
         hot_side_inlet_temp = predictions[1]
-        mass_flowrate_biomass = predictions[2]
+        mass_flowrate_workingfluid = predictions[2]
         maximum_heat_supplied = predictions[3]
         Heat_Input_Heat_Exchanger = round(predictions[4], 1)
         Net_Power_Output = round(predictions[5], 1)
         Cycle_Thermal_Efficiency = round(predictions[6], 1)
         Exergy_Efficiency = round(predictions[7], 1)
         
-        
-        st.write(f"Mass Flowrate of Working Fluid: {mass_flowrate_workingfluid}")
-        st.write(f"Hot Side Inlet Temperature: {hot_side_inlet_temp}")
         st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomass}")
+        st.write(f"Hot Side Inlet Temperature: {hot_side_inlet_temp}")
+        st.write(f"Mass Flowrate of Working Fluid: {mass_flowrate_workingfluid}")
         st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
         st.write(f"Heat Input Heat Exchanger: {Heat_Input_Heat_Exchanger}")
         st.write(f"Net_Power_Output: {Net_Power_Output}")
