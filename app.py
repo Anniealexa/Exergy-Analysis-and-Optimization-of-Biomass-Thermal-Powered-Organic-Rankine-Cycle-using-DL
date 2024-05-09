@@ -143,7 +143,7 @@ def model_interface():
         
         st.write(f"Mass Flowrate of Working Fluid: {mass_flowrate_workingfluid}")
         st.write(f"Hot Side Inlet Temperature: {hot_side_inlet_temp}")
-        st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomas}")
+        st.write(f"Mass Flowrate of Biomass: {mass_flowrate_biomass}")
         st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
         st.write(f"Heat Input Heat Exchanger: {Heat_Input_Heat_Exchanger}")
         st.write(f"Net_Power_Output: {Net_Power_Output}")
