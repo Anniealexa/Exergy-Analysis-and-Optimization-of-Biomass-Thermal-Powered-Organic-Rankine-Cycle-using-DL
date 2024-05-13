@@ -100,7 +100,7 @@ def model_interface():
         Type_Biomass = st.number_input(label="Type of Biomass", min_value=1, max_value=2)
         strength_of_mixture = st.number_input(label="Stength of Mixture", min_value=50, max_value=75)
         #mass_flowrate_Biomass = st.number_input(label="Mass Flowrate of Biomass", min_value=0.1, max_value=0.9)
-        combustion_efficiency = st.number_input(label="Combustion Efficiency", min_value=70, max_value=80)
+        combustion_efficiency = st.number_input(label="Combustion Efficiency", min_value=0.7, max_value=0.8)
         #hot_side_Inlet_Temperature = st.number_input(label="Hot Side Inlet Temperature", min_value=0.0,
          #                                            max_value=5000.0)
         temperature_at_point1 = st.number_input(label="Temperature at Point 1", min_value=440, max_value=500)
