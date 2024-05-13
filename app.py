@@ -144,7 +144,7 @@ def model_interface():
         st.write(f"Maximum Heat Supplied: {maximum_heat_supplied}")
         st.write(f"Heat Input Heat Exchanger: {Heat_Input_Heat_Exchanger}")
         st.write(f"Net_Power_Output: {Net_Power_Output}")
-        st.write(f"Net_Power_Output: {Cycle_Thermal_Efficiency}")
+        st.write(f"Cycle Thermal Efficiency: {Cycle_Thermal_Efficiency}")
         st.write(f"Exergy_Efficiency: {Exergy_Efficiency}")
         
         
